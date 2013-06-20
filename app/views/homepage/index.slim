@@ -1,0 +1,12 @@
+
+textarea id="ime"
+div id="debug"
+script src="http://code.jquery.com/jquery.min.js"
+script src="/ime.js"
+javascript:
+  $(function(){
+    $('#ime').inputMethodEditor({
+      debug : true,
+      debugTarget : '#debug'
+    });
+  });

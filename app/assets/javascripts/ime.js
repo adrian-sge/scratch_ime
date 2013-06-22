@@ -18,22 +18,18 @@
 
   function InputMethodEditor (element, options) {
 
-    if ( element ) {
+    // Set the current DOM node being acted upon
+    this.element = element;
 
-      // Set the current DOM node being acted upon
-      this.element = element;
+    // Set the current jQuery object being acted upon
+    this.$element = $(element);
 
-      // Set the current jQuery object being acted upon
-      this.$element = $(element);
-
-      // Set the current DOM node tag name being acted upon (e.g. "select" or "a")
-      if ( this.$element.prop('tagName') && typeof( this.$element.prop('tagName') ) == 'string' ) {
-        this.htmlTag = this.$element.prop('tagName').toLowerCase();
-      } else {
-        this.htmlTag = false;
-      }
-
-    };
+    // Set the current DOM node tag name being acted upon (e.g. "select" or "a")
+    if ( this.$element.prop('tagName') && typeof( this.$element.prop('tagName') ) == 'string' ) {
+      this.htmlTag = this.$element.prop('tagName').toLowerCase();
+    } else {
+      this.htmlTag = false;
+    }
 
     // Set allowed events
     this.allowedEvents = [
@@ -42,6 +38,8 @@
 
     // Set allowed keys
     this.allowedKeyCodes = [
+      12, // clear
+      13, // enter
       96, // Numpad 0
       97, // Numpad 1
       98, // Numpad 2
@@ -51,7 +49,14 @@
       102, // Numpad 6
       103, // Numpad 7
       104, // Numpad 8
-      105 // Numpad 9
+      105, // Numpad 9
+      106, // Numpad *
+      107, // Numpad +
+      108, // Numpad 9
+      109, // Numpad -
+      110, // Numpad .
+      111, // Numpad /
+      187 // Numpad =
     ];
 
     // Merge the options into the defaults

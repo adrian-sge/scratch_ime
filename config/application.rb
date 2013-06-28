@@ -56,6 +56,9 @@ module ScratchIme
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # add fonts to the asset pipeline
+    config.assets.paths << "#{Rails.root}/app/assets/fonts"
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end

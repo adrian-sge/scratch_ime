@@ -12,20 +12,64 @@
  *= require_tree .
  */
 
+html {
+  font-size: 100%;
+  display: block;
+  height: 100%;
+  background-color: #dafffc;;
+}
 body {
+  display: block;
+  padding-top: 1px;
+  height: 100%;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
+  font-size: .9rem;
+  margin: 0;
+  padding: 0;
+  width: 900px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px #000;
 }
 
-textarea#ime {
+body > header {
+  display: block;
+  height: 90px;
+  text-align: center;
+}
+body > header h1 {
+  display: block;
+  font-size: 3rem;
+  line-height: 90px;
+  margin: 0;
+  font-family: Amadeus;
+}
+
+
+.canvas-text-wrapper {
+  display: block;
+  background-color: #eee;
+  overflow: hidden;
+  margin: 0 20px;
   height: 200px;
-  width: 400px;
 }
-
-div#debug {
+.canvas-text-wrapper canvas {
+  display: block;
+  outline: none;
+  color: #000;
+}
+.canvas-text-wrapper textarea {
+  position: absolute;
+  height: 0;
+  width: 0;
+  outline: none;
+}
+#debug {
   overflow: auto;
   height: 200px;
   width: 400px;
   font-family: "Courier New", serif;
   border: 1px solid black;
+  font-size: .9rem;
+  margin: 10px auto 0px auto;
 }

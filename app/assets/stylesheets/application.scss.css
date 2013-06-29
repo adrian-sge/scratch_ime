@@ -56,7 +56,7 @@ body > header h1 {
 .canvas-text-wrapper canvas {
   display: block;
   outline: none;
-  color: #000;
+  color: #000;  background-color: #fff;
 }
 .canvas-text-wrapper textarea {
   position: absolute;

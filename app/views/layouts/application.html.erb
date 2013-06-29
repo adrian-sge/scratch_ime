@@ -4,12 +4,14 @@
     <title>ScratchIme</title>
     <meta charset="UTF-8" />
     <%= stylesheet_link_tag    "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
+    <%#= javascript_include_tag "application" %>
+    <%= javascript_include_tag "jquery" %>
+    <%= javascript_include_tag "jquery_ujs" %>
+    <%= javascript_include_tag "jcanvas.min" %>
+    <%= javascript_include_tag "scratch_text_edit" %>
     <%= csrf_meta_tags %>
   </head>
   <body>
-
     <%= yield %>
-
   </body>
 </html>

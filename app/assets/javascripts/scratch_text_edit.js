@@ -1,58 +1,94 @@
 "use strict";
 
-jQuery(document).ready(function() {
+function TextEditor(options) {
 
-  var canvasTextWrapper = $(".canvas-text-wrapper")
-    , scratchTextEditor = $("#scratchText")[0]
-    , context = scratchTextEditor.getContext("2d")
-    , copyPaste = $(".canvas-text-wrapper textarea")
-    , text = copyPaste.val()
-    , LINE_HEIGHT = 25
-    , lines = []
-    , index = 0
-    , newIndex
-    , line
-    ;
+  var defaults = {
+        lineHeight : 10,
+        font : '20pt Amadeus',
+        fillStyle : 'blue'
+      };
 
-  // setTimeout( function() {
-  //   context.fillText(text, 0, 20);
-  // }, 1000);
-  function countLines() {
+  this.$canvasWrapper     = $('.canvas-text-wrapper');
+  this.$canvas            = $('#scratch-text');
+  this.canvas             = this.$canvas[0];
+  this.context            = this.canvas.getContext('2d');
+  this.$textarea          = $('.canvas-text-wrapper textarea');
+
+  this.options            = $.extend( true, {}, defaults, options );
+
+  this.init();
+
+};
+
+TextEditor.prototype.init = function () {
+  var self = this;
+
+  this.countLines = function () {
+    var newIndex
+      , index    = 0
+      , lines    = []
+      , text = this.$textarea.val();
+      ;
+
     do {
       newIndex = text.indexOf('\n', index);
-      console.log('newIndex =', newIndex)
-      // if (newIndex !== -1) {
-        lines.push(text.substr(index, newIndex !== -1 ? newIndex - index +1 : void 0));
-      // };
-      console.log('lines =', lines)
-      index = newIndex +1;
-      console.log('index =', index)
-    } while (newIndex !== -1);
-    renderCanvas();
+      lines.push( text.substr( index, newIndex !== -1 ? newIndex - index + 1 : void 0 ) );
+      index = newIndex + 1;
+    } while ( newIndex !== -1 );
+
+    this.renderCanvas(lines);
   };
 
-
-  copyPaste.keyup(function() {
-    line = LINE_HEIGHT * (lines.length +1);
-    text = copyPaste.val();
-    scratchTextEditor.width = scratchTextEditor.width;
-    context.font = '20pt "Amadeus"';
-    context.fillStyle = 'red';
-    countLines();
-  });
-  function renderCanvas() {
-    context.fillText(text, 4, line);
+  this.renderCanvas = function (lines) {
+    this.clearCanvas();
+    this.setupCanvas();
+    for ( var i = 0; i < lines.length; i++ ) {
+      this.context.fillText( lines[i], 4, this.options.lineHeight + (this.options.lineHeight * i) );
+    };
   };
 
+  this.bindKeyUp = function () {
+    this.$textarea.keyup( function (e) {
+      // line = this.options.lineHeight * (lines.length +1);
+      // text = textarea.val();
+      self.countLines();
+    });
+  };
 
-  canvasTextWrapper.focus(function() {
-    $(this).blur().css('outline', '1px solid #09f');
-    copyPaste.focus();
+  this.clearCanvas = function () {
+    this.canvas.width = this.canvas.width;
+  };
+
+  this.setupCanvas = function () {
+    this.context.font = '20pt Amadeus';
+    this.context.fillStyle = 'blue';
+  };
+
+  this.bindCanvasWrapperFocus = function () {
+    this.$canvasWrapper.focus( function (e) {
+      self.$textarea.focus();
+    });
+  };
+
+  this.focusTextarea = function () {
+    this.$textarea.focus();
+  };
+
+  this.exec = function () {
+    this.bindCanvasWrapperFocus();
+    this.bindKeyUp();
+    this.setupCanvas();
+    this.focusTextarea();
+  };
+
+  this.exec();
+
+};
+
+jQuery(document).ready( function () {
+
+  var textEditor = new TextEditor({
+    lineHeight : 25
   });
 
-  copyPaste.focus( function() {
-    // $(this).blur();
-  });
-  // we don't want input to get focus by tabbing;
-  copyPaste.tabIndex = -1;
 });
